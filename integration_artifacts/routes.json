@@ -1,0 +1,8 @@
+{
+  "Routes": [
+    "nats:slbapps.Stratus.DataOut TO /aea2-computation-example-app/DataIn",
+    "/aea2-computation-example-app/DataOut TO nats:slbapps.Stratus.DataIn",
+    "/aea2-computation-example-app/DataOut TO /pulser/DataIn",
+    "/pulser/DataOut TO /aea2-computation-example-app/DataIn"
+  ]
+}

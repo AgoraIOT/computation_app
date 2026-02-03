@@ -1,0 +1,6 @@
+run_simulation.sh
+publish_to_ACR.sh
+docker-compose.yml
+integration_artifacts/routes.json
+integration_artifacts/component.json
+AEA.json

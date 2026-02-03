@@ -1,0 +1,91 @@
+services:
+  pulser-ui:
+    image: ghcr.io/agoraiot/pulser-ui@sha256:e51938de21a9a031228ddc19dd93b7173f83b082c3645347de90451d033a1bde
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    networks:
+      - slbapps
+  pulser:
+    image: ghcr.io/agoraiot/pulser-pulser@sha256:669053ff3a1f8dbdfb4ba4d4e1bb846bd31fb3e34579a5dd8aa3e7ab3bd9eee8
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+      - "5678:5678"
+    depends_on:
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "sleep 2"]
+      interval: 1s
+      retries: 1
+    networks:
+      - slbapps
+  caddy:
+    build:
+      context: 'caddy/'
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "9443:80"
+    networks:
+      - slbapps
+  alpine-redis:
+    image: redis:8.2.3-alpine3.22
+    restart: unless-stopped
+    networks:
+     - slbapps
+  eclipse-mosquitto:
+    build:
+        context: 'mosquitto/'
+        dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - slbapps
+  nats:
+    image: nats:2.12.1-alpine3.22
+    ports:
+      - 4222:4222
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "sleep 2"]
+      interval: 1s
+      retries: 1
+    networks:
+      - slbapps  
+  computation-example:
+    environment:
+      - MQTT_HOST=nats
+      - MQTT_PORT=4222
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5679:5678"
+    depends_on:
+      nats:
+        condition: service_healthy
+      pulser:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "sleep 2"]
+      interval: 1s
+      retries: 1
+    networks:
+      slbapps:
+
+  simu-launcher:
+    build:
+      context: .
+      dockerfile: Dockerfile.simu-launcher
+    depends_on:
+      pulser:
+        condition: service_healthy
+      computation-example:
+        condition: service_healthy
+    networks:
+      - slbapps
+
+networks:
+  slbapps:
+    driver: bridge

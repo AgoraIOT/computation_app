@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="20">
+  <rect width="160" height="20" rx="4" fill="#18653b"/>
+  <text 
+    x="80" 
+    y="14" 
+    font-family="Arial,Helvetica,sans-serif" 
+    font-size="13" fill="#ffffff" 
+    font-weight="800"
+    text-anchor="middle">
+    Agora™Edge AI and IoT
+  </text>
+</svg>

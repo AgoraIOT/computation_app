@@ -1,0 +1,13 @@
+{
+	"Hostname": "aea2-computation-example-app",
+	"Image": "iiotcloudpublicregistry-chfcfkb0fjbjayd2.a02.azurefd.net/sample-apps/computation-app:latest",
+	"Env":[
+    	"MQTT_HOST=${mqtt_host}"
+        ],
+    "HostConfig": {
+    	"NetworkMode": "slbapps",
+        "RestartPolicy": {
+        	"Name": "always"
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+  "Name": "aea2-computation-example-app",
+  "AEA2": {
+    "LogLevel": "Info",
+    "RedisClient": {
+        "Server": "alpine-redis",
+			  "Port": "6379" 
+    },
+    "BusClient": {
+      "Server": "nats://nats:4222",
+      "DeviceId": 321,
+      "Mock": "False",
+      "Timeout_ms": 17000,
+      "Subscriptions": [
+        {
+          "DataIn": [
+              "slbapps.aea2-computation-example-app.DataIn"
+          ]
+        }
+      ],
+      "Targets":[
+        {
+          "DataOut":[
+            "slbapps.events.DataIn",
+            "slbapps.aea2-computation-example-app.DataOut"
+          ]
+        }
+      ]
+    }
+  },
+  "AppConfig": {
+    "Factor": "0.5",
+    "Input1": "Sensor1",
+    "Input2": "Sensor2",
+    "Output1": "scaled-average",
+    "Output2": "scaled-difference"
+  }
+}
