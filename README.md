@@ -15,7 +15,7 @@ Required to be installed:
 - git >= 2.34
 ## Installation
 ```bash
-git clone <TO DO : REPOSITORY FROM GITHUB>
+git clone https://github.com/AgoraIOT/computation_app.git
 ```
 # Usage
 ## Run
