@@ -1,0 +1,21 @@
+version: v1.25.1
+
+ignore:
+  'snyk:lic:pip:nats-py:Unknown':
+    - 'agoraiot@3.0.2 > agora-busclient@3.0.2 > nats-py@2.13.1':
+        reason: >
+          nats-py is licensed under Apache-2.0 according to upstream metadata.
+          Snyk incorrectly detects it as Unknown. This dependency is approved
+          for use within the project.
+        expires: 2026-12-31T21:20:24.457Z
+        created: 2026-02-19T21:20:24.458Z
+
+    - 'nats-py@2.13.1':
+        reason: >
+          nats-py is licensed under Apache-2.0 according to upstream metadata.
+          Snyk incorrectly detects it as Unknown. This dependency is approved
+          for use within the project.
+        expires: 2026-12-31T21:20:24.457Z
+        created: 2026-02-19T21:20:24.458Z
+
+patch: {}
