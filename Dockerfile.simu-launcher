@@ -1,12 +1,17 @@
 FROM python:3.13-alpine
 
-RUN apk update && apk add curl
-
 WORKDIR /app
-COPY ./sim-data/work_ui_import.sh ./work_ui_import.sh
-# RUN chmod +x /app/work_ui_import.sh
-COPY ./sim-data/Pulser_Minimal_Data.xlsx ./Pulser_Minimal_Data.xlsx
 
-USER root
-WORKDIR /app
-CMD cd /app && cat /app/work_ui_import.sh && ./work_ui_import.sh
+RUN apk add --no-cache curl
+
+COPY ./sim-data/work_ui_import.sh /app/work_ui_import.sh
+COPY ./sim-data/Pulser_Minimal_Data.xlsx /app/Pulser_Minimal_Data.xlsx
+
+RUN addgroup -S appgroup \
+    && adduser -S appuser -G appgroup \
+    && chmod 0555 /app/work_ui_import.sh \
+    && chmod 0444 /app/Pulser_Minimal_Data.xlsx
+
+USER appuser
+
+CMD ["sh","-euc","cd /app; cat /app/work_ui_import.sh; exec /app/work_ui_import.sh"]
