@@ -53,7 +53,7 @@ services:
       retries: 1
     networks:
       - slbapps  
-  computation-example:
+  work:
     environment:
       - MQTT_HOST=nats
       - MQTT_PORT=4222
@@ -81,7 +81,7 @@ services:
     depends_on:
       pulser:
         condition: service_healthy
-      computation-example:
+      work:
         condition: service_healthy
     networks:
       - slbapps

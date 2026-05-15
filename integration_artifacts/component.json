@@ -1,5 +1,5 @@
 {
-	"Hostname": "aea2-computation-example-app",
+	"Hostname": "aea2-work-app",
 	"Image": "iiotcloudpublicregistry-chfcfkb0fjbjayd2.a02.azurefd.net/sample-apps/computation-app:latest",
 	"Env":[
     	"MQTT_HOST=${mqtt_host}"

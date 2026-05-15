@@ -1,5 +1,5 @@
 {
-  "Name": "aea2-computation-example-app",
+  "Name": "aea2-work-app",
   "AEA2": {
     "LogLevel": "Info",
     "RedisClient": {
@@ -14,7 +14,7 @@
       "Subscriptions": [
         {
           "DataIn": [
-              "slbapps.aea2-computation-example-app.DataIn"
+              "slbapps.aea2-work-app.DataIn"
           ]
         }
       ],
@@ -22,7 +22,7 @@
         {
           "DataOut":[
             "slbapps.events.DataIn",
-            "slbapps.aea2-computation-example-app.DataOut"
+            "slbapps.aea2-work-app.DataOut"
           ]
         }
       ]
