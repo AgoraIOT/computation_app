@@ -1,0 +1,2 @@
+coverage>=7
+unittest-xml-reporting>=3
