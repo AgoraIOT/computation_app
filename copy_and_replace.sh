@@ -1,4 +1,10 @@
 #!/bin/bash
+set -euo pipefail
+
+# Faithfully copy this directory into the destination repo (used by the public
+# mirror). No name substitution: identifiers like the docker-compose service
+# name and "computation-example" AEA hostname/routes are preserved as-is so the
+# public repo stays consistent with the internal source and the smoke tests.
 
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 1 ]; then
@@ -7,29 +13,12 @@ if [ "$#" -ne 1 ]; then
 fi
 
 DEST_REPO_PATH=$1
-FILE_LIST="./copy_and_replace.list"
-ORIGIN_REPO_NAME=$(basename "$PWD")  
-DEST_REPO_NAME=$(basename "$DEST_REPO_PATH")
 
-#cp -r . "$DEST_REPO_PATH"
-rsync -av --exclude='.git' . "$DEST_REPO_PATH"
+if command -v rsync >/dev/null 2>&1; then
+    rsync -a --exclude='.git' ./ "$DEST_REPO_PATH/"
+else
+    echo "rsync not found; using tar fallback (excluding .git)."
+    tar --exclude='./.git' -cf - . | tar -xf - -C "$DEST_REPO_PATH"
+fi
 
-while IFS= read -r file; do
-    if [ -f "$DEST_REPO_PATH/$file" ]; then
-        sed -i "s/$ORIGIN_REPO_NAME/$DEST_REPO_NAME/g" "$DEST_REPO_PATH/$file"
-    else
-        echo "File $file not found in destination repo."
-    fi
-done < "$FILE_LIST"
-
-# this section should not be needed, however the original repo is not following the convention yet and "computation-example" was used in place of the repo folder name 
-while IFS= read -r file; do
-    if [ -f "$DEST_REPO_PATH/$file" ]; then
-        sed -i "s/computation-example/$DEST_REPO_NAME/g" "$DEST_REPO_PATH/$file"
-    else
-        echo "File $file not found in destination repo."
-    fi
-done < "$FILE_LIST"
-# end of section
-
-echo "Copy and replacement completed successfully."
+echo "Copy completed successfully."

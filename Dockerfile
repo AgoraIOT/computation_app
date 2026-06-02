@@ -1,4 +1,11 @@
-FROM python:3.13-alpine
+# Pin Alpine minor so OpenSSL package floors resolve consistently with apk repos.
+FROM python:3.13-alpine3.23
+
+# Fix zlib CVE (https://nvd.nist.gov/vuln/detail/CVE-2023-45853)is not in latest alpine (as of 2026-03-17)
+# This command will be need to be removed once alpine includes the fixed version
+# Fix OpenSSL CVE-2026-28390 (https://nvd.nist.gov/vuln/detail/CVE-2026-28390) - fixed in 3.5.6-r0
+# These commands will need to be removed once alpine includes the fixed version
+RUN apk update && apk add --no-cache 'libcrypto3>=3.5.6-r0' 'libssl3>=3.5.6-r0' 'zlib>=1.3.2-r0' && rm -rf /var/cache/apk/*
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 

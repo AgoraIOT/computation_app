@@ -1,13 +1,13 @@
 services:
   pulser-ui:
-    image: ghcr.io/agoraiot/pulser-ui@sha256:de2159bd91ab293442069ebb0e040580cee6623dadce655a6554f44851956029
+    image: ghcr.io/agoraiot/pulser-ui@sha256:1ca3c3821b4f6709b8589ed547aa39c9fb8e07e43c8e19b2c9c0d4f5f18dc2f1
     restart: unless-stopped
     ports:
       - "3000:80"
     networks:
       - slbapps
   pulser:
-    image: ghcr.io/agoraiot/pulser-pulser@sha256:99dc4d3b0ab80aa1eba0ca0d35eff00661836318796addb36bd20c6ac893828d
+    image: ghcr.io/agoraiot/pulser-pulser@sha256:1c9e5d2e4d4bd704473339b385c01e84aefa930c3341084a459b0904cbed5e85
     restart: unless-stopped
     ports:
       - "8000:8000"
